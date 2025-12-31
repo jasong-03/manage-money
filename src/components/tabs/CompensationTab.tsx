@@ -30,6 +30,7 @@ export function CompensationTab() {
 
   const [incomeDialogOpen, setIncomeDialogOpen] = useState(false)
   const [editingIncome, setEditingIncome] = useState<Income | null>(null)
+  const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null)
 
   const weeksInMonth = getWeeksInMonth(currentMonth)
 
@@ -88,8 +89,9 @@ export function CompensationTab() {
     setCompanyDialogOpen(true)
   }
 
-  const handleAddWeeklyIncome = () => {
+  const handleAddWeeklyIncome = (companyId: string) => {
     setEditingIncome(null)
+    setSelectedCompanyId(companyId)
     setIncomeDialogOpen(true)
   }
 
@@ -121,6 +123,7 @@ export function CompensationTab() {
         <Button
           onClick={() => {
             setEditingIncome(null)
+            setSelectedCompanyId(null)
             setIncomeDialogOpen(true)
           }}
         >
@@ -240,6 +243,7 @@ export function CompensationTab() {
                       size="sm"
                       onClick={() => {
                         setEditingIncome(null)
+                        setSelectedCompanyId(company.id)
                         setIncomeDialogOpen(true)
                       }}
                     >
@@ -281,6 +285,7 @@ export function CompensationTab() {
         onOpenChange={setIncomeDialogOpen}
         income={editingIncome}
         currentMonth={currentMonth}
+        defaultCompanyId={selectedCompanyId}
       />
     </div>
   )

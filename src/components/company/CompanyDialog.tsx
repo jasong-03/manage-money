@@ -130,7 +130,7 @@ export function CompanyDialog({ open, onOpenChange, company }: CompanyDialogProp
 
             <div className="grid gap-2">
               <Label>Color</Label>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {COLORS.map((c) => (
                   <button
                     key={c.value}
@@ -142,6 +142,18 @@ export function CompanyDialog({ open, onOpenChange, company }: CompanyDialogProp
                     onClick={() => setColor(c.value)}
                   />
                 ))}
+              </div>
+              <div className="flex items-center gap-2 mt-1">
+                <div
+                  className="w-8 h-8 rounded-full border flex-shrink-0"
+                  style={{ backgroundColor: color }}
+                />
+                <Input
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                  placeholder="#3b82f6"
+                  className="font-mono text-sm"
+                />
               </div>
             </div>
           </div>

@@ -10,7 +10,7 @@ import { format } from 'date-fns'
 interface WeeklyIncomeGridProps {
   company: Company
   incomes: Income[]
-  onAdd: () => void
+  onAdd: (companyId: string) => void
   onDelete: (id: string) => void
 }
 
@@ -32,7 +32,7 @@ export function WeeklyIncomeGrid({ company, incomes, onAdd, onDelete }: WeeklyIn
           />
           <h3 className="font-medium">{company.name}</h3>
         </div>
-        <Button variant="ghost" size="sm" onClick={onAdd}>
+        <Button variant="ghost" size="sm" onClick={() => onAdd(company.id)}>
           <Plus className="w-4 h-4 mr-1" />
           Add
         </Button>

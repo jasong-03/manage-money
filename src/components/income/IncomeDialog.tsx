@@ -20,9 +20,10 @@ interface IncomeDialogProps {
   onOpenChange: (open: boolean) => void
   income?: Income | null
   currentMonth: string
+  defaultCompanyId?: string | null
 }
 
-export function IncomeDialog({ open, onOpenChange, income, currentMonth }: IncomeDialogProps) {
+export function IncomeDialog({ open, onOpenChange, income, currentMonth, defaultCompanyId }: IncomeDialogProps) {
   const { companies, addIncome, updateIncome } = useStore()
   const [companyId, setCompanyId] = useState('')
   const [paymentDate, setPaymentDate] = useState<Date | undefined>(undefined)
@@ -39,12 +40,12 @@ export function IncomeDialog({ open, onOpenChange, income, currentMonth }: Incom
       setAmount(income.amount.toString())
       setNote(income.note || '')
     } else {
-      setCompanyId(companies[0]?.id || '')
+      setCompanyId(defaultCompanyId || companies[0]?.id || '')
       setPaymentDate(new Date())
       setAmount('')
       setNote('')
     }
-  }, [income, open, companies])
+  }, [income, open, companies, defaultCompanyId])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
