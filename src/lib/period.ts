@@ -1,12 +1,12 @@
-import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addMonths, subMonths, getWeek, getYear, parse, addWeeks, subWeeks } from 'date-fns'
+import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addMonths, subMonths, getISOWeek, getISOWeekYear, parse, addWeeks, subWeeks } from 'date-fns'
 
 export function getMonthPeriod(date: Date): string {
   return format(date, 'yyyy-MM')
 }
 
 export function getWeekPeriod(date: Date): string {
-  const week = getWeek(date, { weekStartsOn: 1 })
-  const year = getYear(date)
+  const week = getISOWeek(date)
+  const year = getISOWeekYear(date)
   return `${year}-W${week.toString().padStart(2, '0')}`
 }
 
