@@ -85,14 +85,6 @@ export function SubscriptionTab() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Header */}
-      <div className="text-center">
-        <h2 className="text-lg sm:text-2xl font-bold">Subscriptions</h2>
-        <p className="text-muted-foreground text-xs sm:text-sm mt-1">
-          Quản lý các dịch vụ đăng ký hàng tháng
-        </p>
-      </div>
-
       {/* Total Card */}
       <Card className="p-3 sm:p-4">
         <div className="flex items-center justify-between">

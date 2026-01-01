@@ -40,49 +40,47 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className={`mx-auto px-3 sm:px-4 py-2 sm:py-4 ${isWideTab ? 'max-w-7xl' : 'max-w-4xl'}`}>
-        <header className="text-center py-4 sm:py-6">
-          <h1 className="text-xl sm:text-2xl font-bold">Money Manager</h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">Track your income</p>
-        </header>
-
-        <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
-          {/* Top Pill Navigation */}
-          <div className="flex justify-center mb-6 px-2">
-            <TabsList className="bg-slate-800 p-1 sm:p-1.5 rounded-full gap-0.5 sm:gap-1 w-full max-w-md justify-between">
+      <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
+        {/* Header with Tabs */}
+        <header className="sticky top-0 z-50 bg-slate-800 py-3 sm:py-4">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4">
+            <TabsList className="bg-slate-700/50 p-1 sm:p-1.5 rounded-full gap-0.5 sm:gap-1 w-full max-w-lg mx-auto justify-between">
               <TabsTrigger
                 value="dashboard"
-                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
               >
                 Home
               </TabsTrigger>
               <TabsTrigger
                 value="compensation"
-                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
               >
                 Income
               </TabsTrigger>
               <TabsTrigger
                 value="spending"
-                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
               >
                 Spend
               </TabsTrigger>
               <TabsTrigger
                 value="subscriptions"
-                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
               >
                 Subs
               </TabsTrigger>
               <TabsTrigger
                 value="todo"
-                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
               >
                 To do
               </TabsTrigger>
             </TabsList>
           </div>
+        </header>
 
+        {/* Content */}
+        <div className={`mx-auto px-3 sm:px-6 py-4 sm:py-6 ${isWideTab ? 'max-w-7xl' : 'max-w-5xl'}`}>
           <TabsContent value="dashboard" className="mt-0">
             <DashboardTab />
           </TabsContent>
@@ -102,8 +100,8 @@ export default function Home() {
           <TabsContent value="todo" className="mt-0">
             <TodoTab />
           </TabsContent>
-        </Tabs>
-      </div>
+        </div>
+      </Tabs>
     </div>
   )
 }

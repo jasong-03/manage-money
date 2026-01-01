@@ -53,14 +53,6 @@ export function TodoTab() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Header */}
-      <div className="text-center">
-        <h2 className="text-lg sm:text-2xl font-bold">To do</h2>
-        <p className="text-muted-foreground text-xs sm:text-sm mt-1">
-          Manage your personal tasks
-        </p>
-      </div>
-
       {/* Summary Card */}
       <Card className="p-4 sm:p-5">
         <div className="flex items-center justify-between">
