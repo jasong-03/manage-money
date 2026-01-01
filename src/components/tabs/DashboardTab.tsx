@@ -234,12 +234,12 @@ export function DashboardTab() {
       {/* Income Progress */}
       {currentStats.expected > 0 && (
         <Card className="p-4 sm:p-6">
-          <div className="flex justify-between text-sm sm:text-base mb-3">
+          <div className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0 text-sm sm:text-base mb-3">
             <span className="text-muted-foreground">
-              Received: {formatAmount(currentStats.received)}
+              Received: <span className="font-medium text-foreground">{formatAmount(currentStats.received)}</span>
             </span>
-            <span className="font-medium">
-              Expected: {formatAmount(currentStats.expected)}
+            <span className="text-muted-foreground">
+              Expected: <span className="font-medium text-foreground">{formatAmount(currentStats.expected)}</span>
             </span>
           </div>
           <Progress value={currentStats.progress} className="h-3" />
@@ -249,21 +249,32 @@ export function DashboardTab() {
         </Card>
       )}
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 gap-4 sm:gap-6">
-        {/* Received */}
-        <Card className="p-4 sm:p-6 text-center">
-          <Wallet className="w-6 h-6 sm:w-8 sm:h-8 mx-auto text-green-500 mb-2 sm:mb-3" />
-          <p className="text-sm sm:text-base text-muted-foreground">Income</p>
-          <p className="text-xl sm:text-3xl font-bold text-green-600 truncate mt-1">
+      {/* Net Savings - Hero Card */}
+      <Card className={`p-4 sm:p-6 text-center ${currentStats.netIncome >= 0 ? 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-900' : 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-900'}`}>
+        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
+          <PiggyBank className={`w-6 h-6 sm:w-8 sm:h-8 ${currentStats.netIncome >= 0 ? 'text-blue-500' : 'text-red-500'}`} />
+          <p className="text-base sm:text-lg text-muted-foreground">Net Savings This Month</p>
+        </div>
+        <p className={`text-2xl sm:text-4xl font-bold ${currentStats.netIncome >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
+          {currentStats.netIncome >= 0 ? '+' : ''}{formatAmount(currentStats.netIncome)}
+        </p>
+      </Card>
+
+      {/* Stats Grid - Income vs Spending */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-6">
+        {/* Income */}
+        <Card className="p-3 sm:p-6 text-center">
+          <Wallet className="w-5 h-5 sm:w-8 sm:h-8 mx-auto text-green-500 mb-1.5 sm:mb-3" />
+          <p className="text-xs sm:text-base text-muted-foreground">Income</p>
+          <p className="text-lg sm:text-3xl font-bold text-green-600 truncate mt-0.5 sm:mt-1">
             {formatAmount(currentStats.received)}
           </p>
           {comparison && (
-            <div className="flex items-center justify-center gap-1 mt-2 text-sm sm:text-base">
+            <div className="flex items-center justify-center gap-1 mt-1.5 sm:mt-2 text-xs sm:text-base">
               {comparison.isPositive ? (
-                <TrendingUp className="w-4 h-4 text-green-500" />
+                <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
               ) : (
-                <TrendingDown className="w-4 h-4 text-red-500" />
+                <TrendingDown className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
               )}
               <span className={comparison.isPositive ? 'text-green-500' : 'text-red-500'}>
                 {comparison.isPositive ? '+' : ''}{comparison.percentage}%
@@ -273,35 +284,32 @@ export function DashboardTab() {
         </Card>
 
         {/* Spending */}
-        <Card className="p-4 sm:p-6 text-center">
-          <ShoppingBag className="w-6 h-6 sm:w-8 sm:h-8 mx-auto text-red-500 mb-2 sm:mb-3" />
-          <p className="text-sm sm:text-base text-muted-foreground">Spending</p>
-          <p className="text-xl sm:text-3xl font-bold text-red-600 truncate mt-1">
+        <Card className="p-3 sm:p-6 text-center">
+          <ShoppingBag className="w-5 h-5 sm:w-8 sm:h-8 mx-auto text-red-500 mb-1.5 sm:mb-3" />
+          <p className="text-xs sm:text-base text-muted-foreground">Spending</p>
+          <p className="text-lg sm:text-3xl font-bold text-red-600 truncate mt-0.5 sm:mt-1">
             {formatAmount(currentStats.spending)}
           </p>
         </Card>
-
-        {/* Net Income */}
-        <Card className="p-4 sm:p-6 text-center">
-          <PiggyBank className="w-6 h-6 sm:w-8 sm:h-8 mx-auto text-blue-500 mb-2 sm:mb-3" />
-          <p className="text-sm sm:text-base text-muted-foreground">Savings</p>
-          <p className={`text-xl sm:text-3xl font-bold truncate mt-1 ${currentStats.netIncome >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
-            {currentStats.netIncome >= 0 ? '+' : ''}{formatAmount(currentStats.netIncome)}
-          </p>
-        </Card>
-
-        {/* Subscriptions */}
-        <Card className="p-4 sm:p-6 text-center">
-          <CreditCard className="w-6 h-6 sm:w-8 sm:h-8 mx-auto text-purple-500 mb-2 sm:mb-3" />
-          <p className="text-sm sm:text-base text-muted-foreground">Subscriptions</p>
-          <p className="text-xl sm:text-3xl font-bold text-purple-600 truncate mt-1">
-            {formatAmount(subscriptionStats.total)}
-          </p>
-          <p className="text-sm sm:text-base text-muted-foreground mt-1">
-            {subscriptionStats.count} dịch vụ
-          </p>
-        </Card>
       </div>
+
+      {/* Subscriptions Card */}
+      <Card className="p-3 sm:p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <CreditCard className="w-5 h-5 sm:w-8 sm:h-8 text-purple-500" />
+            <div>
+              <p className="text-xs sm:text-base text-muted-foreground">Monthly Subscriptions</p>
+              <p className="text-lg sm:text-2xl font-bold text-purple-600">
+                {formatAmount(subscriptionStats.total)}
+              </p>
+            </div>
+          </div>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            {subscriptionStats.count} active
+          </p>
+        </div>
+      </Card>
 
       {/* Chart and Company Breakdown - side by side on desktop */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">

@@ -42,36 +42,36 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
         {/* Centered Tab Bar */}
-        <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm py-3 sm:py-4">
-          <div className="flex justify-center px-3">
-            <TabsList className="bg-slate-800 p-1.5 sm:p-2 rounded-full gap-1 sm:gap-2">
+        <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm py-2 sm:py-4">
+          <div className="flex justify-center px-2 sm:px-3 overflow-x-auto">
+            <TabsList className="bg-slate-800 p-1 sm:p-2 rounded-full gap-0.5 sm:gap-2 flex-shrink-0">
               <TabsTrigger
                 value="dashboard"
-                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+                className="rounded-full px-3 sm:px-6 py-1.5 sm:py-3 text-xs sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 Home
               </TabsTrigger>
               <TabsTrigger
                 value="compensation"
-                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+                className="rounded-full px-3 sm:px-6 py-1.5 sm:py-3 text-xs sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 Income
               </TabsTrigger>
               <TabsTrigger
                 value="spending"
-                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+                className="rounded-full px-3 sm:px-6 py-1.5 sm:py-3 text-xs sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 Spend
               </TabsTrigger>
               <TabsTrigger
                 value="subscriptions"
-                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+                className="rounded-full px-3 sm:px-6 py-1.5 sm:py-3 text-xs sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 Subs
               </TabsTrigger>
               <TabsTrigger
                 value="todo"
-                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+                className="rounded-full px-3 sm:px-6 py-1.5 sm:py-3 text-xs sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 To do
               </TabsTrigger>
