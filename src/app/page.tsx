@@ -6,6 +6,7 @@ import { DashboardTab } from '@/components/tabs/DashboardTab'
 import { CompensationTab } from '@/components/tabs/CompensationTab'
 import { SpendingTab } from '@/components/tabs/SpendingTab'
 import { SubscriptionTab } from '@/components/tabs/SubscriptionTab'
+import { TodoTab } from '@/components/tabs/TodoTab'
 import { Loader2 } from 'lucide-react'
 import { useHydration } from '@/store/useStore'
 
@@ -37,39 +38,45 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto p-4">
-        <header className="text-center py-6">
-          <h1 className="text-2xl font-bold">Money Manager</h1>
-          <p className="text-sm text-muted-foreground mt-1">Track your income</p>
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 py-2 sm:py-4">
+        <header className="text-center py-4 sm:py-6">
+          <h1 className="text-xl sm:text-2xl font-bold">Money Manager</h1>
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1">Track your income</p>
         </header>
 
         <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
           {/* Top Pill Navigation */}
-          <div className="flex justify-center mb-6">
-            <TabsList className="bg-slate-800 p-1.5 rounded-full gap-1">
+          <div className="flex justify-center mb-6 px-2">
+            <TabsList className="bg-slate-800 p-1 sm:p-1.5 rounded-full gap-0.5 sm:gap-1 w-full max-w-md justify-between">
               <TabsTrigger
                 value="dashboard"
-                className="rounded-full px-6 py-2 text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
               >
-                Dashboard
+                Home
               </TabsTrigger>
               <TabsTrigger
                 value="compensation"
-                className="rounded-full px-6 py-2 text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
               >
-                Compensation
+                Income
               </TabsTrigger>
               <TabsTrigger
                 value="spending"
-                className="rounded-full px-6 py-2 text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
               >
-                Spending
+                Spend
               </TabsTrigger>
               <TabsTrigger
                 value="subscriptions"
-                className="rounded-full px-6 py-2 text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
+                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
               >
                 Subs
+              </TabsTrigger>
+              <TabsTrigger
+                value="todo"
+                className="rounded-full px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+              >
+                To do
               </TabsTrigger>
             </TabsList>
           </div>
@@ -88,6 +95,10 @@ export default function Home() {
 
           <TabsContent value="subscriptions" className="mt-0">
             <SubscriptionTab />
+          </TabsContent>
+
+          <TabsContent value="todo" className="mt-0">
+            <TodoTab />
           </TabsContent>
         </Tabs>
       </div>

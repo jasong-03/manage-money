@@ -96,47 +96,51 @@ export function CompensationTab() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Month Navigation */}
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-2 sm:gap-4">
         <Button
           variant="ghost"
           size="icon"
+          className="h-8 w-8 sm:h-10 sm:w-10"
           onClick={() => setCurrentMonth(navigateMonth(currentMonth, 'prev'))}
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
         </Button>
-        <h2 className="text-xl font-semibold min-w-[180px] text-center">
+        <h2 className="text-base sm:text-xl font-semibold min-w-[140px] sm:min-w-[180px] text-center">
           {formatPeriodDisplay(currentMonth)}
         </h2>
         <Button
           variant="ghost"
           size="icon"
+          className="h-8 w-8 sm:h-10 sm:w-10"
           onClick={() => setCurrentMonth(navigateMonth(currentMonth, 'next'))}
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
         </Button>
       </div>
 
       {/* Action Button */}
       <div className="flex justify-center">
         <Button
+          size="sm"
+          className="h-8 sm:h-9 text-xs sm:text-sm"
           onClick={() => {
             setEditingIncome(null)
             setSelectedCompanyId(null)
             setIncomeDialogOpen(true)
           }}
         >
-          <Plus className="w-4 h-4 mr-2" />
+          <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
           Add Income
         </Button>
       </div>
 
       {/* Progress Summary + Companies */}
-      <Card className="p-4">
+      <Card className="p-3 sm:p-4">
         {monthlyIncomes.length > 0 && (
           <>
-            <div className="flex justify-between text-sm mb-2">
+            <div className="flex justify-between text-xs sm:text-sm mb-2">
               <span className="text-muted-foreground">
                 Received: {formatAmount(totals.received)}
               </span>
@@ -153,20 +157,20 @@ export function CompensationTab() {
 
         {/* Companies Row */}
         {companies.length > 0 && (
-          <div className={monthlyIncomes.length > 0 ? 'mt-4 pt-4 border-t' : ''}>
-            <div className="flex items-center gap-2 flex-wrap">
+          <div className={monthlyIncomes.length > 0 ? 'mt-3 sm:mt-4 pt-3 sm:pt-4 border-t' : ''}>
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
               {companies.map((company: Company) => (
                 <button
                   key={company.id}
                   onClick={() => handleEditCompany(company)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full border bg-muted/30 hover:bg-muted/50 transition-colors text-sm"
+                  className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border bg-muted/30 hover:bg-muted/50 transition-colors text-xs sm:text-sm"
                 >
                   <div
-                    className="w-2.5 h-2.5 rounded-full"
+                    className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full"
                     style={{ backgroundColor: company.color }}
                   />
-                  <span>{company.name}</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="truncate max-w-[60px] sm:max-w-none">{company.name}</span>
+                  <span className="text-[10px] sm:text-xs text-muted-foreground">
                     {company.paymentType === 'weekly' ? 'W' : 'M'}
                   </span>
                 </button>
@@ -174,13 +178,13 @@ export function CompensationTab() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="rounded-full"
+                className="rounded-full h-7 w-7 sm:h-8 sm:w-8 p-0"
                 onClick={() => {
                   setEditingCompany(null)
                   setCompanyDialogOpen(true)
                 }}
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </Button>
             </div>
           </div>
@@ -191,12 +195,13 @@ export function CompensationTab() {
             <Button
               variant="outline"
               size="sm"
+              className="h-8 text-xs sm:text-sm"
               onClick={() => {
                 setEditingCompany(null)
                 setCompanyDialogOpen(true)
               }}
             >
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
               Add first company
             </Button>
           </div>
@@ -205,9 +210,9 @@ export function CompensationTab() {
 
       {/* Weekly Incomes */}
       {weeklyCompanies.length > 0 && (
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Weekly</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="space-y-3 sm:space-y-4">
+          <h3 className="text-xs sm:text-sm font-medium text-muted-foreground">Weekly</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
             {weeklyCompanies.map((company: Company) => (
               <WeeklyIncomeGrid
                 key={company.id}
@@ -223,36 +228,37 @@ export function CompensationTab() {
 
       {/* Monthly Incomes */}
       {monthlyCompanies.length > 0 && (
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-muted-foreground">Monthly</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="space-y-3 sm:space-y-4">
+          <h3 className="text-xs sm:text-sm font-medium text-muted-foreground">Monthly</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
             {monthlyCompanies.map((company: Company) => {
               const companyIncomes = getCompanyIncomes(company.id)
               return (
-                <Card key={company.id} className="p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
+                <Card key={company.id} className="p-3 sm:p-4">
+                  <div className="flex items-center justify-between mb-2 sm:mb-3">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       <div
-                        className="w-3 h-3 rounded-full"
+                        className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full"
                         style={{ backgroundColor: company.color }}
                       />
-                      <h3 className="font-medium">{company.name}</h3>
+                      <h3 className="text-sm sm:text-base font-medium">{company.name}</h3>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
+                      className="h-7 sm:h-8 text-xs sm:text-sm px-2 sm:px-3"
                       onClick={() => {
                         setEditingIncome(null)
                         setSelectedCompanyId(company.id)
                         setIncomeDialogOpen(true)
                       }}
                     >
-                      <Plus className="w-4 h-4 mr-1" />
+                      <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" />
                       Add
                     </Button>
                   </div>
                   {companyIncomes.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-4">
+                    <p className="text-xs sm:text-sm text-muted-foreground text-center py-3 sm:py-4">
                       No income entries this month
                     </p>
                   ) : (

@@ -84,27 +84,27 @@ export function SubscriptionTab() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-2xl font-bold">Subscriptions</h2>
-        <p className="text-muted-foreground text-sm mt-1">
+        <h2 className="text-lg sm:text-2xl font-bold">Subscriptions</h2>
+        <p className="text-muted-foreground text-xs sm:text-sm mt-1">
           Quản lý các dịch vụ đăng ký hàng tháng
         </p>
       </div>
 
       {/* Total Card */}
-      <Card className="p-4">
+      <Card className="p-3 sm:p-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <CreditCard className="w-5 h-5 text-blue-500" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
             <div>
-              <p className="text-sm text-muted-foreground">Tổng chi/tháng</p>
-              <p className="text-2xl font-bold">{formatAmount(totalMonthly)}</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Tổng chi/tháng</p>
+              <p className="text-lg sm:text-2xl font-bold">{formatAmount(totalMonthly)}</p>
             </div>
           </div>
-          <Button onClick={handleAdd}>
-            <Plus className="w-4 h-4 mr-2" />
+          <Button size="sm" className="h-8 sm:h-9 text-xs sm:text-sm" onClick={handleAdd}>
+            <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
             Thêm
           </Button>
         </div>
@@ -113,9 +113,9 @@ export function SubscriptionTab() {
       {/* Subscription Groups */}
       {Object.keys(groupedSubscriptions).length > 0 ? (
         Object.entries(groupedSubscriptions).map(([category, subs]) => (
-          <div key={category} className="space-y-3">
-            <h3 className="text-sm font-medium text-muted-foreground">{category}</h3>
-            <div className="space-y-2">
+          <div key={category} className="space-y-2 sm:space-y-3">
+            <h3 className="text-xs sm:text-sm font-medium text-muted-foreground">{category}</h3>
+            <div className="space-y-1.5 sm:space-y-2">
               {subs.map((subscription: Subscription) => (
                 <SubscriptionCard
                   key={subscription.id}
@@ -129,14 +129,14 @@ export function SubscriptionTab() {
           </div>
         ))
       ) : (
-        <Card className="p-8 text-center">
-          <CreditCard className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-          <h3 className="font-medium mb-2">Chưa có subscription nào</h3>
-          <p className="text-sm text-muted-foreground mb-4">
+        <Card className="p-6 sm:p-8 text-center">
+          <CreditCard className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-muted-foreground mb-3 sm:mb-4" />
+          <h3 className="text-sm sm:text-base font-medium mb-2">Chưa có subscription nào</h3>
+          <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
             Thêm các dịch vụ bạn đăng ký hàng tháng như Netflix, Spotify, ChatGPT...
           </p>
-          <Button onClick={handleAdd}>
-            <Plus className="w-4 h-4 mr-2" />
+          <Button size="sm" className="h-8 sm:h-9 text-xs sm:text-sm" onClick={handleAdd}>
+            <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
             Thêm subscription đầu tiên
           </Button>
         </Card>

@@ -41,9 +41,39 @@ export interface Subscription {
   createdAt: Date
 }
 
+export type TaskStatus = 'new' | 'scheduled' | 'in_progress' | 'completed'
+export type TaskPriority = 'low' | 'medium' | 'high'
+
+export interface Task {
+  id: string
+  title: string
+  description?: string
+  status: TaskStatus
+  priority: TaskPriority
+  dueDate?: Date
+  color: string
+  sortOrder: number
+  companyId?: string
+  createdAt: Date
+}
+
+export const TASK_COLUMNS = [
+  { id: 'new', label: 'New task', color: '#e5e7eb' },
+  { id: 'scheduled', label: 'Scheduled', color: '#fef3c7' },
+  { id: 'in_progress', label: 'In progress', color: '#dbeafe' },
+  { id: 'completed', label: 'Completed', color: '#d1fae5' },
+] as const
+
+export const TASK_PRIORITIES = [
+  { value: 'low', label: 'Low', color: '#22c55e', bgColor: '#dcfce7' },
+  { value: 'medium', label: 'Medium', color: '#f59e0b', bgColor: '#fef3c7' },
+  { value: 'high', label: 'High', color: '#ef4444', bgColor: '#fee2e2' },
+] as const
+
 export interface AppData {
   companies: Company[]
   incomes: Income[]
   expenses: Expense[]
   subscriptions: Subscription[]
+  tasks: Task[]
 }

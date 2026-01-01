@@ -1,7 +1,7 @@
 'use client'
 
 import { create } from 'zustand'
-import { Company, Income, Expense, Subscription } from '@/types'
+import { Company, Income, Expense, Subscription, Task, TaskStatus } from '@/types'
 import { supabase } from '@/lib/supabase'
 import { useEffect, useState } from 'react'
 
@@ -10,6 +10,7 @@ interface AppState {
   incomes: Income[]
   expenses: Expense[]
   subscriptions: Subscription[]
+  tasks: Task[]
   isLoading: boolean
   error: string | null
 
@@ -37,6 +38,12 @@ interface AppState {
   updateSubscription: (id: string, data: Partial<Subscription>) => Promise<void>
   deleteSubscription: (id: string) => Promise<void>
   toggleSubscriptionActive: (id: string) => Promise<void>
+
+  // Task actions
+  addTask: (task: Omit<Task, 'id' | 'createdAt' | 'sortOrder'>) => Promise<void>
+  updateTask: (id: string, data: Partial<Task>) => Promise<void>
+  deleteTask: (id: string) => Promise<void>
+  reorderTasks: (taskId: string, newStatus: TaskStatus, newOrder: number) => Promise<void>
 }
 
 // Helper to convert snake_case to camelCase for companies
@@ -86,11 +93,26 @@ const toSubscription = (row: Record<string, unknown>): Subscription => ({
   createdAt: new Date(row.created_at as string),
 })
 
+// Helper to convert snake_case to camelCase for tasks
+const toTask = (row: Record<string, unknown>): Task => ({
+  id: row.id as string,
+  title: row.title as string,
+  description: row.description as string | undefined,
+  status: row.status as TaskStatus,
+  priority: row.priority as 'low' | 'medium' | 'high',
+  dueDate: row.due_date ? new Date(row.due_date as string) : undefined,
+  color: row.color as string,
+  sortOrder: row.sort_order as number,
+  companyId: row.company_id as string | undefined,
+  createdAt: new Date(row.created_at as string),
+})
+
 export const useStore = create<AppState>()((set, get) => ({
   companies: [],
   incomes: [],
   expenses: [],
   subscriptions: [],
+  tasks: [],
   isLoading: true,
   error: null,
 
@@ -98,23 +120,26 @@ export const useStore = create<AppState>()((set, get) => ({
   loadData: async () => {
     set({ isLoading: true, error: null })
     try {
-      const [companiesRes, incomesRes, expensesRes, subscriptionsRes] = await Promise.all([
+      const [companiesRes, incomesRes, expensesRes, subscriptionsRes, tasksRes] = await Promise.all([
         supabase.from('companies').select('*').order('created_at', { ascending: false }),
         supabase.from('incomes').select('*').order('created_at', { ascending: false }),
         supabase.from('expenses').select('*').order('date', { ascending: false }),
         supabase.from('subscriptions').select('*').order('created_at', { ascending: false }),
+        supabase.from('tasks').select('*').order('sort_order', { ascending: true }),
       ])
 
       if (companiesRes.error) throw companiesRes.error
       if (incomesRes.error) throw incomesRes.error
       if (expensesRes.error) throw expensesRes.error
       if (subscriptionsRes.error) throw subscriptionsRes.error
+      if (tasksRes.error) throw tasksRes.error
 
       set({
         companies: (companiesRes.data || []).map(toCompany),
         incomes: (incomesRes.data || []).map(toIncome),
         expenses: (expensesRes.data || []).map(toExpense),
         subscriptions: (subscriptionsRes.data || []).map(toSubscription),
+        tasks: (tasksRes.data || []).map(toTask),
         isLoading: false,
       })
     } catch (error) {
@@ -430,6 +455,106 @@ export const useStore = create<AppState>()((set, get) => ({
     set((state) => ({
       subscriptions: state.subscriptions.map((s) =>
         s.id === id ? { ...s, isActive: newIsActive } : s
+      ),
+    }))
+  },
+
+  // Task actions
+  addTask: async (task) => {
+    // Get max sort_order for the status column
+    const tasksInColumn = get().tasks.filter((t) => t.status === task.status)
+    const maxOrder = tasksInColumn.reduce((max, t) => Math.max(max, t.sortOrder), -1)
+
+    const { data, error } = await supabase
+      .from('tasks')
+      .insert({
+        title: task.title,
+        description: task.description,
+        status: task.status,
+        priority: task.priority,
+        due_date: task.dueDate ? new Date(task.dueDate).toISOString() : null,
+        color: task.color,
+        sort_order: maxOrder + 1,
+        company_id: task.companyId || null,
+      })
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Error adding task:', error)
+      return
+    }
+
+    set((state) => ({
+      tasks: [...state.tasks, toTask(data)],
+    }))
+  },
+
+  updateTask: async (id, data) => {
+    const updateData: Record<string, unknown> = {}
+    if (data.title !== undefined) updateData.title = data.title
+    if (data.description !== undefined) updateData.description = data.description
+    if (data.status !== undefined) updateData.status = data.status
+    if (data.priority !== undefined) updateData.priority = data.priority
+    if (data.dueDate !== undefined) updateData.due_date = data.dueDate ? new Date(data.dueDate).toISOString() : null
+    if (data.color !== undefined) updateData.color = data.color
+    if (data.sortOrder !== undefined) updateData.sort_order = data.sortOrder
+    if (data.companyId !== undefined) updateData.company_id = data.companyId || null
+
+    const { error } = await supabase
+      .from('tasks')
+      .update(updateData)
+      .eq('id', id)
+
+    if (error) {
+      console.error('Error updating task:', error)
+      return
+    }
+
+    set((state) => ({
+      tasks: state.tasks.map((t) =>
+        t.id === id ? { ...t, ...data } : t
+      ),
+    }))
+  },
+
+  deleteTask: async (id) => {
+    const { error } = await supabase.from('tasks').delete().eq('id', id)
+
+    if (error) {
+      console.error('Error deleting task:', error)
+      return
+    }
+
+    set((state) => ({
+      tasks: state.tasks.filter((t) => t.id !== id),
+    }))
+  },
+
+  reorderTasks: async (taskId, newStatus, newOrder) => {
+    const task = get().tasks.find((t) => t.id === taskId)
+    if (!task) return
+
+    // Update in database
+    const { error } = await supabase
+      .from('tasks')
+      .update({
+        status: newStatus,
+        sort_order: newOrder,
+      })
+      .eq('id', taskId)
+
+    if (error) {
+      console.error('Error reordering task:', error)
+      return
+    }
+
+    // Update local state
+    set((state) => ({
+      tasks: state.tasks.map((t) =>
+        t.id === taskId
+          ? { ...t, status: newStatus, sortOrder: newOrder }
+          : t
       ),
     }))
   },

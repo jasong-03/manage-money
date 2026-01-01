@@ -75,3 +75,29 @@ CREATE INDEX IF NOT EXISTS idx_incomes_period ON incomes(period);
 CREATE INDEX IF NOT EXISTS idx_expenses_date ON expenses(date);
 CREATE INDEX IF NOT EXISTS idx_expenses_category ON expenses(category);
 CREATE INDEX IF NOT EXISTS idx_subscriptions_is_active ON subscriptions(is_active);
+
+-- Tasks table (Kanban board)
+CREATE TABLE IF NOT EXISTS tasks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  description TEXT,
+  status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'scheduled', 'in_progress', 'completed')),
+  priority TEXT NOT NULL DEFAULT 'medium' CHECK (priority IN ('low', 'medium', 'high')),
+  due_date TIMESTAMPTZ,
+  color TEXT DEFAULT '#3b82f6',
+  sort_order INTEGER DEFAULT 0,
+  company_id UUID REFERENCES companies(id) ON DELETE SET NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS for tasks
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+
+-- Create policy for tasks
+CREATE POLICY "Allow all for tasks" ON tasks
+  FOR ALL USING (true) WITH CHECK (true);
+
+-- Create indexes for tasks
+CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);
+CREATE INDEX IF NOT EXISTS idx_tasks_sort ON tasks(status, sort_order);
+CREATE INDEX IF NOT EXISTS idx_tasks_due_date ON tasks(due_date);

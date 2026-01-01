@@ -144,17 +144,17 @@ export function SpendingTab() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* View Mode Toggle */}
       <div className="flex justify-center">
-        <div className="inline-flex rounded-lg border p-1 bg-muted/30">
+        <div className="inline-flex rounded-lg border p-0.5 sm:p-1 bg-muted/30">
           {(['day', 'week', 'month'] as const).map((mode) => (
             <Button
               key={mode}
               variant={viewMode === mode ? 'default' : 'ghost'}
               size="sm"
               onClick={() => setViewMode(mode)}
-              className="px-4"
+              className="px-2.5 sm:px-4 h-7 sm:h-8 text-xs sm:text-sm"
             >
               {mode === 'day' ? 'Ngày' : mode === 'week' ? 'Tuần' : 'Tháng'}
             </Button>
@@ -163,27 +163,27 @@ export function SpendingTab() {
       </div>
 
       {/* Period Navigation */}
-      <div className="flex items-center justify-center gap-2">
-        <Button variant="ghost" size="icon" onClick={() => navigate('prev')}>
-          <ChevronLeft className="w-5 h-5" />
+      <div className="flex items-center justify-center gap-1 sm:gap-2">
+        <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={() => navigate('prev')}>
+          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
         </Button>
         <button
           onClick={goToToday}
-          className="text-lg font-semibold min-w-[200px] text-center hover:text-primary transition-colors"
+          className="text-sm sm:text-lg font-semibold min-w-[160px] sm:min-w-[200px] text-center hover:text-primary transition-colors"
         >
           {periodDisplay}
         </button>
-        <Button variant="ghost" size="icon" onClick={() => navigate('next')}>
-          <ChevronRight className="w-5 h-5" />
+        <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={() => navigate('next')}>
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
         </Button>
       </div>
 
       {/* Chat Input */}
-      <Card className="p-4">
+      <Card className="p-3 sm:p-4">
         <ChatInput onSubmit={handleSubmit} isLoading={isLoading} />
         {error && (
-          <div className="mt-2 flex items-center gap-2 text-sm text-destructive">
-            <AlertCircle className="w-4 h-4" />
+          <div className="mt-2 flex items-center gap-2 text-xs sm:text-sm text-destructive">
+            <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
             {error}
           </div>
         )}
@@ -191,21 +191,21 @@ export function SpendingTab() {
 
       {/* Expense List */}
       {groupedExpenses.length === 0 ? (
-        <Card className="p-8 text-center text-muted-foreground">
-          <p>Chưa có chi tiêu nào trong khoảng thời gian này</p>
-          <p className="text-sm mt-1">Nhập chi tiêu ở ô trên để bắt đầu</p>
+        <Card className="p-6 sm:p-8 text-center text-muted-foreground">
+          <p className="text-sm sm:text-base">Chưa có chi tiêu nào trong khoảng thời gian này</p>
+          <p className="text-xs sm:text-sm mt-1">Nhập chi tiêu ở ô trên để bắt đầu</p>
         </Card>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {groupedExpenses.map(({ date, expenses }) => (
             <div key={date.toISOString()}>
-              <h3 className="text-sm font-medium text-muted-foreground mb-2">
+              <h3 className="text-xs sm:text-sm font-medium text-muted-foreground mb-1.5 sm:mb-2">
                 {formatDateHeader(date)}
-                <span className="ml-2 text-foreground">
+                <span className="ml-1.5 sm:ml-2 text-foreground">
                   ({formatAmount(expenses.reduce((sum, e) => sum + e.amount, 0))})
                 </span>
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-1.5 sm:space-y-2">
                 {expenses.map((expense) => (
                   <ExpenseCard
                     key={expense.id}
