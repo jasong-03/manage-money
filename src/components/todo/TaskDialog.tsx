@@ -11,7 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar'
 import { Task, TaskStatus, TaskPriority, TASK_COLUMNS, TASK_PRIORITIES } from '@/types'
 import { useStore } from '@/store/useStore'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, Expand, Shrink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 
@@ -41,6 +41,7 @@ export function TaskDialog({ open, onOpenChange, task, defaultStatus = 'new' }: 
   const [color, setColor] = useState(COLORS[0].value)
   const [companyId, setCompanyId] = useState<string>('')
   const [calendarOpen, setCalendarOpen] = useState(false)
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false)
 
   useEffect(() => {
     if (task) {
@@ -59,6 +60,7 @@ export function TaskDialog({ open, onOpenChange, task, defaultStatus = 'new' }: 
       setDueDate(undefined)
       setColor(COLORS[0].value)
       setCompanyId('')
+      setDescriptionExpanded(false)
     }
   }, [task, defaultStatus, open])
 
@@ -106,13 +108,29 @@ export function TaskDialog({ open, onOpenChange, task, defaultStatus = 'new' }: 
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="description">Description</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="description">Description</Label>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 px-2 text-xs"
+                  onClick={() => setDescriptionExpanded(!descriptionExpanded)}
+                >
+                  {descriptionExpanded ? (
+                    <><Shrink className="w-3 h-3 mr-1" /> Shrink</>
+                  ) : (
+                    <><Expand className="w-3 h-3 mr-1" /> Expand</>
+                  )}
+                </Button>
+              </div>
               <Textarea
                 id="description"
                 value={description}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
                 placeholder="Task description (optional)..."
-                rows={3}
+                rows={descriptionExpanded ? 10 : 3}
+                className={descriptionExpanded ? 'min-h-[200px]' : ''}
               />
             </div>
 
