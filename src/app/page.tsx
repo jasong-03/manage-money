@@ -41,46 +41,46 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
-        {/* Header with Tabs */}
-        <header className="sticky top-0 z-50 bg-slate-800 py-3 sm:py-4">
-          <div className="max-w-7xl mx-auto px-3 sm:px-4">
-            <TabsList className="bg-slate-700/50 p-1 sm:p-1.5 rounded-full gap-0.5 sm:gap-1 w-full max-w-lg mx-auto justify-between">
+        {/* Centered Tab Bar */}
+        <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm py-3 sm:py-4">
+          <div className="flex justify-center px-3">
+            <TabsList className="bg-slate-800 p-1.5 sm:p-2 rounded-full gap-1 sm:gap-2">
               <TabsTrigger
                 value="dashboard"
-                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 Home
               </TabsTrigger>
               <TabsTrigger
                 value="compensation"
-                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 Income
               </TabsTrigger>
               <TabsTrigger
                 value="spending"
-                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 Spend
               </TabsTrigger>
               <TabsTrigger
                 value="subscriptions"
-                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 Subs
               </TabsTrigger>
               <TabsTrigger
                 value="todo"
-                className="rounded-full px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all flex-1"
+                className="rounded-full px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-medium text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-sm transition-all"
               >
                 To do
               </TabsTrigger>
             </TabsList>
           </div>
-        </header>
+        </div>
 
         {/* Content */}
-        <div className={`mx-auto px-3 sm:px-6 py-4 sm:py-6 ${isWideTab ? 'max-w-7xl' : 'max-w-5xl'}`}>
+        <div className={`mx-auto px-4 sm:px-8 py-4 sm:py-8 ${isWideTab ? 'max-w-7xl' : 'max-w-6xl'}`}>
           <TabsContent value="dashboard" className="mt-0">
             <DashboardTab />
           </TabsContent>
