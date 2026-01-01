@@ -61,7 +61,7 @@ export function TaskCard({ task, onEdit, isDragging }: TaskCardProps) {
     <Card
       ref={setNodeRef}
       style={style}
-      className={`p-2 sm:p-3 border-l-4 cursor-grab active:cursor-grabbing transition-shadow ${
+      className={`p-3 sm:p-4 border-l-4 cursor-grab active:cursor-grabbing transition-shadow ${
         isDragging ? 'shadow-lg opacity-90' : 'hover:shadow-md'
       }`}
       {...attributes}
@@ -71,7 +71,7 @@ export function TaskCard({ task, onEdit, isDragging }: TaskCardProps) {
           {...listeners}
           className="mt-1 text-muted-foreground hover:text-foreground cursor-grab"
         >
-          <GripVertical className="w-4 h-4" />
+          <GripVertical className="w-5 h-5" />
         </div>
 
         <div className="flex-1 min-w-0">
@@ -80,12 +80,12 @@ export function TaskCard({ task, onEdit, isDragging }: TaskCardProps) {
               className="w-1 h-full absolute left-0 top-0 bottom-0 rounded-l-md"
               style={{ backgroundColor: task.color }}
             />
-            <h4 className="text-sm font-medium truncate">{task.title}</h4>
+            <h4 className="text-base font-medium">{task.title}</h4>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-6 w-6 flex-shrink-0">
-                  <MoreVertical className="w-3.5 h-3.5" />
+                <Button variant="ghost" size="icon" className="h-7 w-7 flex-shrink-0">
+                  <MoreVertical className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -115,15 +115,15 @@ export function TaskCard({ task, onEdit, isDragging }: TaskCardProps) {
           </div>
 
           {task.description && (
-            <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+            <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
               {task.description}
             </p>
           )}
 
-          <div className="flex items-center gap-2 mt-2 flex-wrap">
+          <div className="flex items-center gap-2 mt-3 flex-wrap">
             {priority && (
               <span
-                className="text-xs px-1.5 py-0.5 rounded-full"
+                className="text-sm px-2 py-1 rounded-full font-medium"
                 style={{
                   backgroundColor: priority.bgColor,
                   color: priority.color,
@@ -133,16 +133,16 @@ export function TaskCard({ task, onEdit, isDragging }: TaskCardProps) {
               </span>
             )}
             {company && (
-              <span className="text-xs px-1.5 py-0.5 rounded-full bg-muted flex items-center gap-1">
+              <span className="text-sm px-2 py-1 rounded-full bg-muted flex items-center gap-1.5">
                 <span
-                  className="w-1.5 h-1.5 rounded-full"
+                  className="w-2 h-2 rounded-full"
                   style={{ backgroundColor: company.color }}
                 />
                 {company.name}
               </span>
             )}
             {dueInfo && (
-              <span className={`text-xs ${dueInfo.className}`}>
+              <span className={`text-sm ${dueInfo.className}`}>
                 {dueInfo.text}
               </span>
             )}

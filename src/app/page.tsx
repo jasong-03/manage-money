@@ -36,9 +36,11 @@ export default function Home() {
     )
   }
 
+  const isWideTab = currentTab === 'todo'
+
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-3 sm:px-4 py-2 sm:py-4">
+      <div className={`mx-auto px-3 sm:px-4 py-2 sm:py-4 ${isWideTab ? 'max-w-7xl' : 'max-w-4xl'}`}>
         <header className="text-center py-4 sm:py-6">
           <h1 className="text-xl sm:text-2xl font-bold">Money Manager</h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-1">Track your income</p>

@@ -62,19 +62,19 @@ export function TodoTab() {
       </div>
 
       {/* Summary Card */}
-      <Card className="p-3 sm:p-4">
+      <Card className="p-4 sm:p-5">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <CheckSquare className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />
+          <div className="flex items-center gap-3 sm:gap-4">
+            <CheckSquare className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
             <div>
-              <p className="text-xs sm:text-sm text-muted-foreground">Tasks completed</p>
-              <p className="text-lg sm:text-2xl font-bold">
+              <p className="text-sm sm:text-base text-muted-foreground">Tasks completed</p>
+              <p className="text-xl sm:text-3xl font-bold">
                 {completedTasks} / {totalTasks}
               </p>
             </div>
           </div>
-          <Button size="sm" className="h-8 sm:h-9 text-xs sm:text-sm" onClick={() => handleAddTask('new')}>
-            <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+          <Button size="default" className="h-10 sm:h-11 text-sm sm:text-base" onClick={() => handleAddTask('new')}>
+            <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
             Add Task
           </Button>
         </div>
