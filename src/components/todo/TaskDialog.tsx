@@ -119,12 +119,15 @@ export function TaskDialog({ open, onOpenChange, task, defaultStatus = 'new' }: 
             {companies.length > 0 && (
               <div className="grid gap-2">
                 <Label htmlFor="company">Company (optional)</Label>
-                <Select value={companyId} onValueChange={setCompanyId}>
+                <Select
+                  value={companyId || '__none__'}
+                  onValueChange={(v) => setCompanyId(v === '__none__' ? '' : v)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select company..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value="__none__">None</SelectItem>
                     {companies.map((company) => (
                       <SelectItem key={company.id} value={company.id}>
                         <span className="flex items-center gap-2">
